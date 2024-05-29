@@ -1,0 +1,11 @@
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.square {
+  height: 60px;
+  width: 60px;
+  border: 1px solid black;
+  margin: 2px;
+}
