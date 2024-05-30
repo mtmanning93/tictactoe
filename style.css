@@ -6,6 +6,6 @@
 .square {
   height: 60px;
   width: 60px;
-  border: 1px solid black;
+  border: 1px solid rgb(223, 0, 0);
   margin: 2px;
 }
