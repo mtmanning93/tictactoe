@@ -1,32 +1,46 @@
+document.addEventListener("DOMContentLoaded", startGame);
 const squares = document.getElementsByClassName("square");
 
 function startGame() {
   for (let square of squares) {
-    square.addEventListener("click", function () {
-      userChoice = this.getAttribute("value");
-    });
+    square.addEventListener("click", playUser);
   }
-
-  playComp();
 }
 
 function playUser() {
   // Updates square with 0 when user clicks
-  for (let i = 0; i < squares.length; i++) {
-    squares[i].addEventListener("click", function () {
-      squares[i].innerHTML = "<h1>O</h1>";
-    });
+  if (this.innerHTML === "") {
+    this.innerHTML = "<h1>O</h1>";
+
+    this.removeEventListener("click", playUser);
+
+    findFilledSquares();
+
+    playComp();
   }
 }
 
-function playComp(userChoice) {
-  const randomChoice = Math.floor(Math.random() * squares.length);
-
-  const computerChoice = squares[randomChoice];
-
-  computerChoice.innerHTML = "<h1>X</h1>";
-
-  return computerChoice;
+function findFilledSquares() {
+  for (let square of squares) {
+    if (square.innerHTML !== "") {
+      square.removeEventListener("click", playUser);
+    }
+  }
 }
 
-document.addEventListener("DOMContentLoaded", playUser);
+function playComp() {
+  let emptySquares = Array.from(squares).filter(
+    (square) => square.innerHTML === ""
+  );
+
+  if (emptySquares.length > 0) {
+    const randomChoice = Math.floor(Math.random() * squares.length);
+    const computerChoice = squares[randomChoice];
+
+    computerChoice.innerHTML = "<h1>X</h1>";
+
+    computerChoice.removeEventListener("click", playUser);
+
+    findFilledSquares();
+  }
+}
